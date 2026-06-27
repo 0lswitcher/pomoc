@@ -1,8 +1,8 @@
 # Maintainer: cobra-r9 <cobra.rev.9@gmail.com>
-pkgname=my_program
+pkgname=pomoc
 pkgver=1.0.0
 pkgrel=1
-pkgdesc="A C template project structure defined specifically for arch linux."
+pkgdesc="A Unix domain socket based pomodoro timer daemon and client"
 arch=('x86_64')
 license=('MIT')
 makedepends=('gcc' 'make')
@@ -11,14 +11,15 @@ sha256sums=()
 
 build() {
     cd "$startdir"
-    make NAME="$pkgname"
+    make
 }
 
 package() {
     cd "$startdir"
-    install -Dm755 "build/bin/$pkgname" "$pkgdir/usr/bin/$pkgname"
+    install -Dm755 "build/bin/pomod" "$pkgdir/usr/bin/pomod"
+    install -Dm755 "build/bin/pomoc" "$pkgdir/usr/bin/pomoc"
     install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
     install -Dm644 readme.md "$pkgdir/usr/share/docs/$pkgname/README.md"
-    cp -r writeups "$pkgdir/usr/share/docs/$pkgname/writeups"
+    cp -r docs "$pkgdir/usr/share/docs/$pkgname/docs"
     echo "Run 'make purge' to clean makepkg residues..."
 }
