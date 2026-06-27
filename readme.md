@@ -79,7 +79,7 @@ pkill pomod
 
 ## Commands
 
-The below given table will **teach** you how to use this tool. I have also included some useful scripts in the scripts directory to make it easy for the users (you ppl) to integrate into other programs and bars. 
+The below given table will **teach** you how to use this tool. I have also included some useful scripts in the end to make it easy for the users (you ppl) to integrate into other programs and bars. 
 
 ### Control
 
@@ -184,3 +184,84 @@ echo "$(pomoc status active) — $(pomoc status time)"
 # → focus — 24:37
 ```
 
+### polybar 
+
+Create the following modules in the `modules.ini` file. I use `paplay` to play the alarm sound for 5 seconds as the focus/break ends, and send a critical notification with timeout so that it is also visible to me in case I am deaf. 
+
+```ini
+[module/pomoc]
+type = custom/script
+exec = /path/to/pomoc.sh
+interval = 1
+
+format = <label>
+format-prefix = " "
+format-prefix-foreground = ${color.BLUE}
+
+label = "%output%"
+click-left  = /path/to/pomoc-toggle.sh
+click-right = pomoc end
+
+```
+
+For this integration to work properly - You need to 
+
+1) Have a config file in '~/.config/pomoc/config.ini' with parameters set before you can start the daemon. (`pomod`)
+2) Start the daemon `pomod` to make the output visible in the polybar.
+3) Start the pomodoro using the client `pomoc` via :
+
+```bash
+pomoc start
+```
+
+4) See the timer running. Finally, touch some grass during the break.
+
+In this modules, you click (left) to start or pause the pomodoro.
+And right click to skip the pomodoro and move to break. 
+You cannot skip the break.
+
+>[!IMPORTANT]
+> Without the following scripts, the module will not work. Make sure to change the `/path/to/<script>` to the actual path where you want to keep the script. And also make sure to make it executable via `chmod +x <script>`
+
+**pomoc.sh**
+
+```bash
+#!/bin/bash
+
+result=$(pomoc status time 2>/dev/null)
+active=$(pomoc status active 2>/dev/null)
+if [[ ! "$result" ]]; then
+    echo ""
+else
+    echo "$result" | grep -qP "^\d{2}\d{2}\d{2}" &&
+        echo "$result" | sed 's/\([0-9]*\):\([0-9]*\):\([0-9]*\)/\1h \2m \3s/' ||
+        echo "$result" | sed 's/\([0-9]*\):\([0-9]*\)/\1m \2s/'
+
+    if [[ "$result" == "00:00" || "$result" = "00:00:00" ]]; then
+        notify-send "Pomodoro Client : $active" "Your $active period has end." -u "critical" -t "5000" &
+        timeout 5 paplay /usr/share/sounds/freedesktop/stereo/alarm-clock-elapsed.oga &
+    fi
+fi
+```
+
+
+**pomoc-toggle.sh**
+
+
+```bash
+#!/bin/bash
+
+active="$(pomoc status active)"
+
+if [[ "$active" == "idle" || "$(cat /tmp/polyline.pomoc.state)" == "pause" ]]; then
+    pomoc start
+    echo "focus" >/tmp/polyline.pomoc.state
+elif [[ "$(cat /tmp/polyline.pomoc.state)" == "focus" ]]; then
+    pomoc pause
+    echo "pause" >/tmp/polyline.pomoc.state
+fi
+
+[[ "$active" == "break" ]] && echo "break" >/tmp/polyline.pomoc.state
+```
+
+**Watch out or pull request for other bar integrations.**
