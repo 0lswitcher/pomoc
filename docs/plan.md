@@ -15,4 +15,10 @@ Starting with the files - what they are and what they have, what they do.
 
 The header file contains the constants - the command names, the socket paths - just constants that would be used for the communication between the daemon, socket and the client. Header has only the declarations of the constants, and tells the compiler to find the definition from the object file via `extern`. (object files are created by the Makefile, in obj directory)
 
-While the source file contains the definitions of the constants. When this file is compiled to the object file, the `ld` would find the definitions from its object file for constants that are declared in the header file. 
+While the source file contains the definitions of the constants. When this file is compiled to the object file, the `ld` would find the definitions from its object file for constants that are declared in the header file.
+
+## state - `state.h` and `state.c`
+
+The header file consists of the PomState enum type for the state of the pomodoro and the struct definition for the PomData, which is the data of the pomodoro around which the entire process revolves around. And the functions for initialising the data as idle, returning the state of the pomodoro whether the break is active or focus is running, and function to return the state.
+
+The source file consists of its definitions. 
