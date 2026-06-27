@@ -41,8 +41,8 @@ This installs `pomod` and `pomoc` to `/usr/bin/`.
 Create the config file:
 
 ```bash
-mkdir -p ~/.config/pomodoro
-nvim ~/.config/pomodoro/config
+mkdir -p ~/.config/pomoc
+nvim ~/.config/pomoc/config.ini
 ```
 
 Of course, you can use the editor of your choice to edit the configuration.
