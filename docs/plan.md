@@ -21,4 +21,9 @@ While the source file contains the definitions of the constants. When this file 
 
 The header file consists of the PomState enum type for the state of the pomodoro and the struct definition for the PomData, which is the data of the pomodoro around which the entire process revolves around. And the functions for initialising the data as idle, returning the state of the pomodoro whether the break is active or focus is running, and function to return the state.
 
-The source file consists of its definitions. 
+The source file consists of its definitions.
+
+## config - `config.h` and `config.c`
+
+The header file has the declarations for config path and a function to the config values to the pomodoro data. 
+Wheras the source file has the functions defined there. 
