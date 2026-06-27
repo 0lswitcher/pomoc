@@ -1,6 +1,6 @@
 # ignore everything in obj folder.
 obj/
-
+build/
 # ignore all the swap files. 
 *.swp
 
