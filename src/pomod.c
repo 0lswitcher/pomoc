@@ -69,24 +69,28 @@ static void handle_command(const char *cmd, char *reply) {
     // similarly for the remaining time. parsed as string. 
     if (strcmp(cmd, CMD_STATUS_TIME) == 0) {
         char timebuf[32];
-        format_time(timebuf, data.remaining_hr, data.remaining_min, data.remaining_sec);
+        if (data.state == STATE_IDLE) {
+            format_time(timebuf, data.focus_hr, data.focus_min, data.focus_sec);
+        } else {
+            format_time(timebuf, data.remaining_hr, data.remaining_min, data.remaining_sec);            
+        }
         sprintf(reply, "%s", timebuf);
         return;
     }
 
     // we are goning to do this formating via strcmp and sprintf sequently for all the commands in protocl.h and craft a reply. 
     if (strcmp(cmd, CMD_STATUS_HR) == 0) {
-        sprintf(reply, "%02d", data.remaining_hr);
+        sprintf(reply, "%02d", data.state == STATE_IDLE ? data.focus_hr : data.remaining_hr);
         return;
     }
 
     if (strcmp(cmd, CMD_STATUS_MIN) == 0) {
-        sprintf(reply, "%02d", data.remaining_min);
+        sprintf(reply, "%02d", data.state == STATE_IDLE ? data.focus_min : data.remaining_min);
         return;
     }
 
     if (strcmp(cmd, CMD_STATUS_SEC) == 0) {
-        sprintf(reply, "%02d", data.remaining_sec);
+        sprintf(reply, "%02d", data.state == STATE_IDLE ? data.focus_sec : data.remaining_sec);
         return;
     }
 
