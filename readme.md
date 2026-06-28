@@ -103,6 +103,7 @@ The below given table will **teach** you how to use this tool. I have also inclu
 |---|---|
 | `pomoc start` | Start or resume focus timer |
 | `pomoc pause` | Pause focus timer |
+| `pomoc toggle` | Toggle between pause and resume/start |
 | `pomoc end` | End focus early, triggers break immediately |
 
 ### Status
@@ -128,6 +129,8 @@ The below given table will **teach** you how to use this tool. I have also inclu
 | `pomoc break min +N` | Increment/decrement break minutes |
 | `pomoc break sec +N` | Increment/decrement break seconds |
 
+>[!WARNING]
+> You can now update the **focus** timer's value midway while the focus is in progress by : pausing it via `pomoc pause`, then updating the value via `pomoc focus hr/min/sec +/-N`, then resume the timer `pomoc start`. But note that **you cannot pause the break** midway while its running. You can update the break before it starts via `pomoc break min/sec +/-N`. You are not supposed to have break for hours.
 
 ### Rules
 
