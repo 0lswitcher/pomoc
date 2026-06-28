@@ -282,5 +282,5 @@ fi
 
 **Watch out or pull request for other bar integrations.**
 
->[NOTE]
+>[!NOTE]
 > If you want to learn C, know the plan, build similar projects - you can see in the **[docs](./docs)** directory. Start with **[plan.md](./docs/plan.md)**
