@@ -166,9 +166,18 @@ pomoc focus min +5
 # start
 pomoc start
 
+# toggle 
+pomoc toggle
+
 # check status
 pomoc status
-# → running focus 49:42
+# → paused focus 49:42
+
+# toggle again
+pomoc toggle
+
+pomoc status state
+# → running
 
 # check time only
 pomoc status time
@@ -215,8 +224,6 @@ exec = /path/to/pomoc.sh
 interval = 1
 
 format = <label>
-format-prefix = " "
-format-prefix-foreground = ${color.BLUE}
 
 label = "%output%"
 click-left  = /path/to/pomoc-toggle.sh
@@ -226,6 +233,25 @@ click-left  = /path/to/pomoc-toggle.sh
 click-right = pomoc end
 
 ```
+
+We can also indicate the status of the pomodoro, whether it is paused, running, idle or in break. This comes with the new functionality `pomoc status state` in the update (see [PKGBUILD](./PKGBUILD)) version `1.0.2`. Suppose we need to indicate the state of the pomodoro with glyphs, we need a separate module : `pomoc-state`, which is as given below.
+
+```ini
+[module/pomoc-state]
+type = custom/script
+exec = /path/to/pomoc-state.sh
+interval = 0.5
+format = <label>
+format-foreground = ${color.BLUE}
+
+label = "%output% "
+click-left  = pomoc toggle
+click-right = pomoc end
+```
+
+
+>[!NOTE]
+> Make sure to replace that `format-foreground = ${color.BLUE}` in the `pomoc-state` module to a valid color as per your polybar configuration.
 
 For this integration to work properly - You need to 
 
@@ -247,6 +273,7 @@ You cannot skip the break.
 > Without the following scripts, the module will not work. Make sure to change the `/path/to/<script>` to the actual path where you want to keep the script. And also make sure to make it executable via `chmod +x <script>`
 
 **pomoc.sh**
+
 
 ```bash
 #!/bin/bash
@@ -286,6 +313,22 @@ fi
 
 [[ "$active" == "break" ]] && echo "break" >/tmp/polyline.pomoc.state
 ```
+
+
+**pomoc-state.sh**
+
+
+```bash
+#!/bin/bash
+
+state="$(pomoc status state)"
+
+[[ "$state" == "idle" ]] && echo "󱎫"
+[[ "$state" == "running" ]] && echo "󰥔"
+[[ "$state" == "paused" ]] && echo "󰥕"
+[[ "$state" == "break" ]] && echo "󰔟"
+```
+
 
 **Watch out or pull request for other bar integrations.**
 
