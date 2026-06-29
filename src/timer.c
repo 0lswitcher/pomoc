@@ -6,7 +6,7 @@
 #include <stdlib.h>
 
 // the timer tick will update the int values.
-// this will return 0 on success and 1 on failure.
+// this will return 0 on success and -1 on failure.
 int timer_tick(int *hr, int *min, int *sec) {
     if (*sec > 0) {
         (*sec)--;
