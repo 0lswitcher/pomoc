@@ -143,6 +143,62 @@ make: *** [/home/cobra/.Makefile-default:8: run] Error 1
 // ... the code goes here 
 ```
 
-### `extern`
+### `extern` and `static`
+
+Here comes the `extern`. Remember this keyword for now : `static`. If there are a couple of C files, and a couple other header files, this implies that the C compiler has the capability to access the values, definitions and declarations across all these files - the ones that are declared globally. With the `static` keyword, we tell the compiler that - 
+
+**hey, this is a variable, declaration, definition that are scoped only to this file and will be limited to only this file.**
+
+And the `extern` keyword does this thing - it explicitly states that - **hey look for this function signature, not only in this file, but across all the files that are included.**
+
+Anything that has `static` would not be visible to the `extern`. 
+
+> **Hide and Seek.**
 
 
+```c
+// socket path
+extern const char *SOCKET_PATH;
+
+// commands to start pause and end the pomodoro. 
+extern const char *CMD_START;
+extern const char *CMD_PAUSE;
+extern const char *CMD_TOGGLE;
+extern const char *CMD_END;
+
+// client commands to get various status of the pomod daemon. 
+extern const char *CMD_STATUS;
+extern const char *CMD_STATUS_STAT;
+extern const char *CMD_STATUS_ACT;
+extern const char *CMD_STATUS_TIME;
+extern const char *CMD_STATUS_HR;
+extern const char *CMD_STATUS_MIN;
+extern const char *CMD_STATUS_SEC;
+
+// client commands to set the time for focus and break, override the configfile. 
+extern const char *CMD_SET_FOCUS;
+extern const char *CMD_SET_BREAK;
+
+// client commands to increment the time for focus or break.
+extern const char *CMD_INCR;
+
+// the response strings for OK and ERR. 
+extern const char *RES_OK;
+extern const char *RES_ERR;
+
+// standard buffer size. 
+extern const int BUF_SIZE;
+
+```
+
+Uhh, read the comments. That's it. we are literally telling the compiler in each line of code that : hey look for the constant char pointer named SOCKET_PATH, CMD_START, or whatever which has the same name and same declaration which is defined in another file. (in this case, we have it defined in `protocol.c`). 
+
+These are nothing but, a set of protocol which I am defining, so that the `client` can communicate with the `daemon` and the `daemon` answers the question. 
+
+I have designed the program such that, a response is send for every command that is sent by the client. Client sends command, Daemon responses - there are again only two responses : `RES_OK` and `RES_ERR`.
+
+Before the response is sent by the daemon, the daemon executes the orders for the command, then sends the response to notify the client that - **hey, your command succeeded** or **hey, your command failed**. 
+
+### Next 
+
+See **[protocol.c](./protocolc.md)**
