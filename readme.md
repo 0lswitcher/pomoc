@@ -111,6 +111,7 @@ The below given table will **teach** you how to use this tool. I have also inclu
 | Command | Output |
 |---|---|
 | `pomoc status` | Full status: state, phase, remaining time |
+| `pomoc status state` | Current State : `paused`, `running`, `break`, `idle`|
 | `pomoc status active` | Active phase: `focus` or `break` |
 | `pomoc status time` | Remaining time formatted |
 | `pomoc status hr` | Remaining hours (raw) |
