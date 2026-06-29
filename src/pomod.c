@@ -62,7 +62,7 @@ static void handle_command(const char *cmd, char *reply) {
 
     // we need to have a command such that : if it is paused, we get paused, get idle when nothing is there, get break if break is running, that is, this function just returns the state_str (see state.c)
 
-    if (strcmp(cmd, SMD_STATUS_STAT) == 0) {
+    if (strcmp(cmd, CMD_STATUS_STAT) == 0) {
         sprintf(reply, "%s", state_str(&data));
         return;
     }
