@@ -93,6 +93,8 @@ int main(int argc, char *argv[]) {
     } else if (strcmp(argv[1], "status") == 0) {
         if (argc == 2)
             snprintf(cmd, sizeof(cmd), "%s", CMD_STATUS);
+        else if (strcmp(argv[2], "state") == 0)
+            snprintf(cmd, sizeof(cmd), "%s", CMD_STATUS_STAT);
         else if (strcmp(argv[2], "active") == 0)
             snprintf(cmd, sizeof(cmd), "%s", CMD_STATUS_ACT);
         else if (strcmp(argv[2], "time") == 0)

@@ -14,6 +14,7 @@ extern const char *CMD_END;
 
 // client commands to get various status of the pomod daemon. 
 extern const char *CMD_STATUS;
+extern const char *CMD_STATUS_STAT;
 extern const char *CMD_STATUS_ACT;
 extern const char *CMD_STATUS_TIME;
 extern const char *CMD_STATUS_HR;

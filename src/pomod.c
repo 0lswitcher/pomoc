@@ -60,7 +60,15 @@ static void handle_command(const char *cmd, char *reply) {
         return;
     }
 
+    // we need to have a command such that : if it is paused, we get paused, get idle when nothing is there, get break if break is running, that is, this function just returns the state_str (see state.c)
+
+    if (strcmp(cmd, SMD_STATUS_STAT) == 0) {
+        sprintf(reply, "%s", state_str(&data));
+        return;
+    }
     // similarly, reply what is active : see the state.h and state.c 
+    // this command would provide you which phase of the pomodoro is running : ie, prints the active phase. 
+    // it may be idle (nothing active), focus (focus is running), break (break is running)
     if (strcmp(cmd, CMD_STATUS_ACT) == 0) {
         sprintf(reply, "%s", state_phase_str(&data));
         return;

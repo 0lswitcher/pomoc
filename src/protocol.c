@@ -16,6 +16,7 @@ const char *CMD_END = "END";
 // client commands to get various status of the pomod daemon. 
 const char *CMD_STATUS = "STATUS";
 const char *CMD_STATUS_ACT = "STATUS active";
+const char *CMD_STATUS_STAT = "STATUS state";
 const char *CMD_STATUS_TIME = "STATUS time";
 const char *CMD_STATUS_HR = "STATUS hr";
 const char *CMD_STATUS_MIN = "STATUS min";
