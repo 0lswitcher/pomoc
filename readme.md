@@ -349,10 +349,13 @@ fi
 
 state="$(pomoc status state)"
 
-[[ "$state" == "idle" ]] && echo "󱎫"
-[[ "$state" == "running" ]] && echo "󰥔"
-[[ "$state" == "paused" ]] && echo "󰥕"
-[[ "$state" == "break" ]] && echo "󰔟"
+case "$state" in
+    idle) echo "󱎫" ;;
+    running) echo "󰥔" ;;
+    paused) echo "󰥕" ;;
+    break) echo "󰔟" ;;
+    *) echo "?" ;;
+esac
 ```
 
 ### waybar
